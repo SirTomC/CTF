@@ -16,11 +16,7 @@ template = """
   Password: <input name="password"><br>
   <button type="submit">Login</button>
 </form>
-<p><strong>Hint:</strong> Usernames:</p>
-<ul>
-  <li>admin</li>
-  <li>carlos</li>
-</ul>
+<p><i>Usernames:<b>admin</b> and <b>carlos</b>.</i></p>
 <p>{{ message }}</p>
 """
 
