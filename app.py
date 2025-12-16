@@ -3,7 +3,7 @@ import os
 
 app = Flask(__name__)
 
-hidden_flag = "<p style='color: white;'>Tommy{y0u_HaV3_f0uND_m3}</p>"
+FLAG = "Tommy{y0u_HaV3_f0uND_m3}"
 
 template = """
 <!DOCTYPE html>
@@ -13,28 +13,38 @@ template = """
 </head>
 <body style="background-color: white; color: black;">
   <h2>XSS Challenge</h2>
+
   <form method="GET">
     Enter your message: <input name="q">
     <button type="submit">Submit</button>
   </form>
+
   <p><i>Hint: Darkmode is superior!</i></p>
   <hr>
+
   <h3>Your input:</h3>
   <div>{user_input}</div>
 
-  <div>{flag}</div>
+  <script>
+    function revealFlag() {{
+      const p = document.createElement("p");
+      p.style.color = "white";
+      p.innerText = "{flag}";
+      document.body.appendChild(p);
+    }}
+  </script>
+
 </body>
 </html>
 """
 
-@app.route('/', methods=['GET'])
+@app.route("/", methods=["GET"])
 def index():
     q = request.args.get("q", "")
-    
-    user_input = q
-    
-    return render_template_string(template.format(user_input=user_input, flag=hidden_flag))
+    return render_template_string(
+        template.format(user_input=q, flag=FLAG)
+    )
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host="0.0.0.0", port=port)
