@@ -17,7 +17,7 @@ template = """
   <button type="submit">Login</button>
 </form>
 
-<p><b>Hint:</b> Known usernames:</p>
+<p><b>Usernames:</p>
 admin<br>
 carlos<br>
 
