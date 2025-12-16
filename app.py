@@ -13,27 +13,28 @@ template = """
 </head>
 <body style="background-color: white; color: black;">
   <h2>XSS Challenge</h2>
-
   <form method="GET">
     Enter your message: <input name="q">
     <button type="submit">Submit</button>
   </form>
-
-  <p><i>Hint: Darkmode is superior!</i></p>
+  <p>Hint: Dark mode is superior by far.</p>
   <hr>
-
   <h3>Your input:</h3>
   <div>{user_input}</div>
-
   <script>
-    function revealFlag() {{
+    async function revealFlag() {{
+      const bg = window.getComputedStyle(document.body).backgroundColor;
+      if (bg !== "rgb(0, 0, 0)") {{
+        return;
+      }}
+      const res = await fetch("/flag");
+      const text = await res.text();
       const p = document.createElement("p");
       p.style.color = "white";
-      p.innerText = "{flag}";
+      p.textContent = text;
       document.body.appendChild(p);
     }}
   </script>
-
 </body>
 </html>
 """
@@ -41,9 +42,11 @@ template = """
 @app.route("/", methods=["GET"])
 def index():
     q = request.args.get("q", "")
-    return render_template_string(
-        template.format(user_input=q, flag=FLAG)
-    )
+    return render_template_string(template.format(user_input=q))
+
+@app.route("/flag")
+def flag():
+    return FLAG
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
