@@ -3,8 +3,7 @@ import os
 
 app = Flask(__name__)
 
-# This is the flag, hidden in white text
-hidden_flag = "<p style='color: white;'>CTF{r3v34l3d_by_xss}</p>"
+hidden_flag = "<p style='color: white;'>Tommy{y0u_HaV3_f0uND_m3}</p>"
 
 template = """
 <!DOCTYPE html>
@@ -31,7 +30,6 @@ template = """
 def index():
     q = request.args.get("q", "")
     
-    # Reflecting user input directly without escaping — XSS vuln!
     user_input = q
     
     return render_template_string(template.format(user_input=user_input, flag=hidden_flag))
