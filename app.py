@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template_string
+import os
 
 app = Flask(__name__)
 
@@ -19,15 +20,15 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        # Simulated SQL injection vulnerability
         query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"
         print("[DEBUG] SQL:", query)
 
         if username == 'admin' and "' OR 1=1--" in password:
-            message = "Flag: CTF{sql_injection_worked}"
+            message = "Flag: Tommy{y0u_d1D_1T}"
         else:
             message = "Login failed"
     return render_template_string(template, message=message)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
