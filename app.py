@@ -21,6 +21,7 @@ template = """
   <hr>
   <h3>Your input:</h3>
   <div>{user_input}</div>
+
   <script>
     async function revealFlag() {{
       const bg = window.getComputedStyle(document.body).backgroundColor;
@@ -34,6 +35,7 @@ template = """
       p.textContent = text;
       document.body.appendChild(p);
     }}
+    setTimeout(revealFlag, 500);
   </script>
 </body>
 </html>
