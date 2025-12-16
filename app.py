@@ -3,6 +3,12 @@ import os
 
 app = Flask(__name__)
 
+# Simulated user database
+users = {
+    'admin': 'supersecret',
+    'carlos': '1234'
+}
+
 template = """
 <h2>Login</h2>
 <form method="POST">
@@ -19,17 +25,26 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        simulated_query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"
-        print("[DEBUG] SQL:", simulated_query)
+        query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"
+        print("[DEBUG] SQL:", query)
 
-        if username != "admin":
-            message = "You must be admin to access the flag."
-
-        elif "' OR 1=1" in simulated_query.upper():
-            message = "Flag: Tommy{y0U_D1d_iT}"
-
+        if username in users:
+            injected = "' OR 1=1" in password.upper() or "--" in password
+            real_password = users[username]
+            if injected:
+                if username == 'admin':
+                    message = "Flag: CTF{sql_injection_bypass_admin}"
+                else:
+                    message = f"Access granted to {username}, but flag is only for admin."
+            elif password == real_password:
+                if username == 'admin':
+                    message = "Flag: Tommy{y0U_hAv3_F0uND_m3}"
+                else:
+                    message = f"Welcome, {username}. (No flag for you!)"
+            else:
+                message = "Login failed: incorrect password."
         else:
-            message = "Login failed."
+            message = "Login failed: user not found."
 
     return render_template_string(template, message=message)
 
