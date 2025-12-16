@@ -26,7 +26,7 @@ def login():
             message = "You must be admin to access the flag."
 
         elif "' OR 1=1" in simulated_query.upper():
-            message = "Flag: CTF{sql_injection_worked}"
+            message = "Flag: Tommy{y0U_D1d_iT}"
 
         else:
             message = "Login failed."
