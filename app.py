@@ -19,14 +19,18 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        simulated_query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"
+        print("[DEBUG] SQL:", simulated_query)
 
-        query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"
-        print("[DEBUG] SQL:", query)
+        if username != "admin":
+            message = "You must be admin to access the flag."
 
-        if username != "" and ("' OR 1=1--" in username or "' OR 1=1--" in password):
-            message = "Flag: Tommy{y0u_d1D_1T}"
+        elif "' OR 1=1" in simulated_query.upper():
+            message = "Flag: CTF{sql_injection_worked}"
+
         else:
-            message = "Login failed"
+            message = "Login failed."
+
     return render_template_string(template, message=message)
 
 if __name__ == '__main__':
