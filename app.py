@@ -35,7 +35,7 @@ template = """
       p.textContent = text;
       document.body.appendChild(p);
     }}
-    setTimeout(revealFlag, 500);
+    revealFlag();
   </script>
 </body>
 </html>
