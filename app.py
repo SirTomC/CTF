@@ -17,6 +17,7 @@ template = """
     Enter your message: <input name="q">
     <button type="submit">Submit</button>
   </form>
+  <p><i>Hint: Darkmode is superior!</i></p>
   <hr>
   <h3>Your input:</h3>
   <div>{user_input}</div>
