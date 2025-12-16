@@ -5,8 +5,8 @@ app = Flask(__name__)
 
 # Simulated user database
 users = {
-    'admin': 'supersecret',
-    'carlos': '1234'
+    'admin': 'passwordadmin',
+    'carlos': 'carlos'
 }
 
 template = """
@@ -33,12 +33,12 @@ def login():
             real_password = users[username]
             if injected:
                 if username == 'admin':
-                    message = "Flag: CTF{sql_injection_bypass_admin}"
+                    message = "Flag: Tommy{y0U_hAv3_F0uND_mE}"
                 else:
                     message = f"Access granted to {username}, but flag is only for admin."
             elif password == real_password:
                 if username == 'admin':
-                    message = "Flag: Tommy{y0U_hAv3_F0uND_m3}"
+                    message = "Flag: Tommy{y0U_hAv3_F0uND_mE}"
                 else:
                     message = f"Welcome, {username}. (No flag for you!)"
             else:
