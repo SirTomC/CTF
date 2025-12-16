@@ -23,7 +23,7 @@ def login():
         query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"
         print("[DEBUG] SQL:", query)
 
-        if username == 'admin' and "' OR 1=1--" in password:
+        if username != "" and ("' OR 1=1--" in username or "' OR 1=1--" in password):
             message = "Flag: Tommy{y0u_d1D_1T}"
         else:
             message = "Login failed"
